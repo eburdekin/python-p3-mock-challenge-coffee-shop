@@ -28,8 +28,11 @@ class Coffee:
 
 
 class Customer:
+    all = []
+
     def __init__(self, name):
         self.name = name
+        type(self).all.append(self)
 
     @property
     def name(self):
@@ -48,6 +51,17 @@ class Customer:
 
     def create_order(self, coffee, price):
         return Order(self, coffee, price)
+
+    @classmethod
+    def most_aficionado(cls, coffee):
+        most = None
+        most_spent = 0
+        for customer in cls.all:
+            cust_total = sum([order.price for order in self.orders(customer)])
+            if cust_total > most_spent:
+                most_spent = cust_total
+                most = customer
+        return most
 
 
 class Order:
